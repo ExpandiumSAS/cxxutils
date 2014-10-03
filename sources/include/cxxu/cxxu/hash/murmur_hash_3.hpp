@@ -5,7 +5,7 @@
 #ifndef _MURMURHASH3_H_
 #define _MURMURHASH3_H_
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 //-----------------------------------------------------------------------------
 // Platform-specific functions and macros
@@ -28,13 +28,13 @@ typedef unsigned __int64 uint64_t;
 
 //-----------------------------------------------------------------------------
 
-TIMEVAULT_API
+CXXUTILS_API
 void MurmurHash3_x86_32  ( const void * key, int len, uint32_t seed, void * out );
 
-TIMEVAULT_API
+CXXUTILS_API
 void MurmurHash3_x86_128 ( const void * key, int len, uint32_t seed, void * out );
 
-TIMEVAULT_API
+CXXUTILS_API
 void MurmurHash3_x64_128 ( const void * key, int len, uint32_t seed, void * out );
 
 //-----------------------------------------------------------------------------

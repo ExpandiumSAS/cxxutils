@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 #include <cxxu/sort/details/radix_sort.hpp>
 
 namespace cxxu {

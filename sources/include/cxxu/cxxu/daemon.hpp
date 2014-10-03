@@ -3,11 +3,11 @@
 
 #include <string>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API daemon
+class CXXUTILS_API daemon
 {
 public:
     daemon(const std::string& name);

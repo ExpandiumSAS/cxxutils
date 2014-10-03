@@ -15,7 +15,7 @@
 
 #include <boost/mpl/if.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 #include <cxxu/types.hpp>
 
 // Black magic stolen from:
@@ -62,66 +62,66 @@ struct has_member_ ## WHAT                                 \
 
 namespace cxxu {
 
-TIMEVAULT_API
+CXXUTILS_API
 bool interactive(void);
-TIMEVAULT_API
+CXXUTILS_API
 void set_progress(std::size_t x, std::size_t n, std::size_t w = 50);
-TIMEVAULT_API
+CXXUTILS_API
 void clear_progress(std::size_t w = 50);
 
-TIMEVAULT_API
+CXXUTILS_API
 std::string home_directory(void);
-TIMEVAULT_API
+CXXUTILS_API
 bool exists(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool directory_exists(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool file_exists(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool touch_file(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool truncate_file(const std::string& path, std::size_t size);
-TIMEVAULT_API
+CXXUTILS_API
 bool copy_file(const std::string& from, const std::string& to);
-TIMEVAULT_API
+CXXUTILS_API
 uint64_t file_size(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool mkpath(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 unsigned long rmpath(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool rmfile(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 bool mkfilepath(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 void rename(const std::string& from_path, const std::string& to_path);
-TIMEVAULT_API
+CXXUTILS_API
 std::string fullpath(const std::string& rel);
-TIMEVAULT_API
+CXXUTILS_API
 std::string fullpath(const std::string& dir, const std::string& file);
-TIMEVAULT_API
+CXXUTILS_API
 std::string basename(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 std::string dirname(const std::string& path);
-TIMEVAULT_API
+CXXUTILS_API
 unsigned long long human_readable_size(const std::string& expr);
 
-TIMEVAULT_API
+CXXUTILS_API
 void split(const std::string& re, const std::string& expr, cxxu::string_list& list);
 
-TIMEVAULT_API
+CXXUTILS_API
 void chomp(std::string& s);
 
-TIMEVAULT_API
+CXXUTILS_API
 void unquote(std::string& s);
 
-TIMEVAULT_API
+CXXUTILS_API
 cxxu::string_list glob(const std::string& expr);
 
-TIMEVAULT_API
+CXXUTILS_API
 bool match(const std::string& expr, const std::string& re);
 
-TIMEVAULT_API bool
+CXXUTILS_API bool
 extract_delimited(
     std::string& from,
     std::string& to,
@@ -129,15 +129,15 @@ extract_delimited(
     unsigned char quote = '\0'
 );
 
-TIMEVAULT_API
+CXXUTILS_API
 std::string demangle_type_name(const std::string& mangled);
-TIMEVAULT_API
+CXXUTILS_API
 std::string md5sum(const std::string& file);
-TIMEVAULT_API
+CXXUTILS_API
 std::string escape(const char c);
-TIMEVAULT_API
+CXXUTILS_API
 std::string escape_for_string(const char c);
-TIMEVAULT_API
+CXXUTILS_API
 std::string escape(const std::string& s);
 
 template <typename T>

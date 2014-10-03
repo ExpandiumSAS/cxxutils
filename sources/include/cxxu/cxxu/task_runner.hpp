@@ -13,11 +13,11 @@
 #include <cxxu/task_group.hpp>
 #include <cxxu/task_chain.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API task_runner
+class CXXUTILS_API task_runner
 {
 public:
     static task_runner& get();

@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
@@ -23,7 +23,7 @@ enum class signal
 
 typedef std::function<void(cxxu::signal)> signal_function;
 
-class TIMEVAULT_API signaler
+class CXXUTILS_API signaler
 {
 public:
     static signaler& get();

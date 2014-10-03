@@ -5,12 +5,12 @@
 
 #include <cxxu/logging/log_writer.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace logging {
 
-class TIMEVAULT_API clog_writer : public log_writer
+class CXXUTILS_API clog_writer : public log_writer
 {
 public:
     clog_writer();

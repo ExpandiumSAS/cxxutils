@@ -3,11 +3,11 @@
 
 #include <time.h>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-TIMEVAULT_API
+CXXUTILS_API
 size_t
 strftime(char *const s, const size_t maxsize,
     const char *const format, const struct tm *const t, int msec);

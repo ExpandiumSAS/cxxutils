@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace pack {
@@ -18,8 +18,8 @@ void
     const uint8_t* __restrict__ in,
     uint32_t n
 );
-extern TIMEVAULT_API packer_8_ptr packer_8_table[8];
-extern TIMEVAULT_API packer_8_ptr packer_8_simd_table[8];
+extern CXXUTILS_API packer_8_ptr packer_8_table[8];
+extern CXXUTILS_API packer_8_ptr packer_8_simd_table[8];
 
 typedef
 void
@@ -28,8 +28,8 @@ void
     const uint8_t* __restrict__ in,
     uint32_t n
 );
-extern TIMEVAULT_API unpacker_8_ptr unpacker_8_table[8];
-extern TIMEVAULT_API unpacker_8_ptr unpacker_8_simd_table[8];
+extern CXXUTILS_API unpacker_8_ptr unpacker_8_table[8];
+extern CXXUTILS_API unpacker_8_ptr unpacker_8_simd_table[8];
 
 } // namespace pack
 } // namespace cxxu

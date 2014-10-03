@@ -5,11 +5,11 @@
 
 #include <cxxu/task_set.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API task_group : public task_set
+class CXXUTILS_API task_group : public task_set
 {
 private:
     virtual void run();

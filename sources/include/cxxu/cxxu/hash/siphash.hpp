@@ -5,12 +5,12 @@
 #include <cstddef>
 #include <cstdint>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace hash {
 
-class TIMEVAULT_API siphash
+class CXXUTILS_API siphash
 {
 public:
     siphash();

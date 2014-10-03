@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 #include <cxxu/list_map.hpp>
 #include <cxxu/obj_list_map.hpp>
@@ -17,7 +17,7 @@ enum class graph_type
     with_root
 };
 
-class TIMEVAULT_API graph
+class CXXUTILS_API graph
 {
 public:
     graph(graph_type type = graph_type::no_root);

@@ -5,11 +5,11 @@
 #include <string>
 #include <vector>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API text_block
+class CXXUTILS_API text_block
 {
 public:
     text_block();

@@ -5,11 +5,11 @@
 #include <ostream>
 #include <chrono>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API timer
+class CXXUTILS_API timer
 {
 public:
     timer(bool s = false);
@@ -34,7 +34,7 @@ private:
     time_point stop_;
 };
 
-TIMEVAULT_API
+CXXUTILS_API
 std::string
 format_duration(float duration);
 

@@ -3,11 +3,11 @@
 
 #include <time.h>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-TIMEVAULT_API
+CXXUTILS_API
 char*
 strptime(const char *buf, const char *fmt, struct tm *tm, int* msec);
 

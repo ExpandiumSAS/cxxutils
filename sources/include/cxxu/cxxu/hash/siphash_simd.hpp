@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace hash {
 
-TIMEVAULT_API
+CXXUTILS_API
 uint64_t
 siphash_simd(const uint8_t key[16], const uint8_t *m, uint64_t n);
 

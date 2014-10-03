@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace system {
 
-class TIMEVAULT_API info
+class CXXUTILS_API info
 {
 public:
     info();

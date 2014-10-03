@@ -6,12 +6,12 @@
 
 #include <cxxu/logging/log_writer.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace logging {
 
-class TIMEVAULT_API syslog_writer : public log_writer
+class CXXUTILS_API syslog_writer : public log_writer
 {
 public:
     syslog_writer(const std::string& name = "");

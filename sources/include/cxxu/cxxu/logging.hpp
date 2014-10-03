@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <chrono>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 #include <cxxu/utils.hpp>
 #include <cxxu/exceptions.hpp>
@@ -14,7 +14,7 @@
 
 namespace cxxu {
 
-class TIMEVAULT_API log_item : public std::ostringstream
+class CXXUTILS_API log_item : public std::ostringstream
 {
 public:
     log_item(
@@ -31,7 +31,7 @@ private:
     logging::level level_;
 };
 
-class TIMEVAULT_API timed_log_item : public log_item
+class CXXUTILS_API timed_log_item : public log_item
 {
 public:
     timed_log_item(logging::log_writer_ptr writer_ptr);
@@ -44,7 +44,7 @@ private:
     std::chrono::time_point<std::chrono::system_clock> end_;
 };
 
-class TIMEVAULT_API logger
+class CXXUTILS_API logger
 {
 public:
     static logger& get();

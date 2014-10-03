@@ -9,7 +9,7 @@
 #include <queue>
 #include <type_traits>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
@@ -19,7 +19,7 @@ typedef std::promise<void> task_promise;
 typedef std::future<void> task_future;
 typedef std::function<void()> void_function;
 
-class TIMEVAULT_API task_base {
+class CXXUTILS_API task_base {
 public:
     task_base() noexcept;
     task_base(void_function&& f) noexcept;

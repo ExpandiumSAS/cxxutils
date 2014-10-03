@@ -8,11 +8,11 @@
 
 #include <cxxu/task.hpp>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-class TIMEVAULT_API task_set : public task_base
+class CXXUTILS_API task_set : public task_base
 {
 public:
     task_set() noexcept;

@@ -4,12 +4,12 @@
 #include <iostream>
 #include <string>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 
-TIMEVAULT_API void hex_dump(std::ostream& os, const void* b, unsigned int count);
-TIMEVAULT_API void hex_dump(const void* b, unsigned int count);
+CXXUTILS_API void hex_dump(std::ostream& os, const void* b, unsigned int count);
+CXXUTILS_API void hex_dump(const void* b, unsigned int count);
 
 void hex_dump(const std::string& s);
 

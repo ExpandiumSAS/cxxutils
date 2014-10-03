@@ -1,7 +1,7 @@
 #ifndef __CXXU_LOGGING_LEVEL_H__
 #define __CXXU_LOGGING_LEVEL_H__
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 namespace cxxu {
 namespace logging {
@@ -20,7 +20,7 @@ struct level_desc
     const char* s;
 };
 
-TIMEVAULT_API
+CXXUTILS_API
 const char*
 make_level(level l);
 

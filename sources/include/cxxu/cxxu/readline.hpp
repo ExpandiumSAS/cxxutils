@@ -7,7 +7,7 @@
 #include <functional>
 #include <fstream>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 #include <cxxu/utils.hpp>
 
@@ -37,7 +37,7 @@ struct readline_repl_params {
     char command;
 };
 
-class TIMEVAULT_API readline {
+class CXXUTILS_API readline {
 public:
     typedef std::function<int(const std::string&)> input_handler;
     typedef std::function<

@@ -4,14 +4,14 @@
 #include <string>
 #include <memory>
 
-#include <timevault/config.h>
+#include <cxxutils/config.h>
 
 #include <cxxu/logging/level.hpp>
 
 namespace cxxu {
 namespace logging {
 
-class TIMEVAULT_API log_writer
+class CXXUTILS_API log_writer
 {
 public:
     virtual
