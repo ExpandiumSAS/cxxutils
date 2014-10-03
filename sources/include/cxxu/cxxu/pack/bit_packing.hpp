@@ -45,8 +45,8 @@ struct bit_packer {
     compressed_size_(uint32_t bits, uint32_t n)
     {
         return
-            tv::utils::align_to_128bits(
-                tv::utils::byte_size_of(bits, n)
+            cxxu::align_to_128bits(
+                cxxu::byte_size_of(bits, n)
             )
             ;
     }
@@ -65,7 +65,7 @@ struct bit_packer {
         simd_packer(out_, in_, simd_count);
 
         uint32_t processed = simd_count * simd_items_at_a_time;
-        tv::utils::inc_ptr(out_, compressed_size(bits, processed));
+        cxxu::inc_ptr(out_, compressed_size(bits, processed));
 
         return (void*) out_;
     }
@@ -80,7 +80,7 @@ struct bit_packer {
         pack_function_type std_packer = table_type::pack_function(bits, false);
 
         std_packer(out_, in_, n);
-        tv::utils::inc_ptr(out_, compressed_size(bits, n));
+        cxxu::inc_ptr(out_, compressed_size(bits, n));
 
         return (void*) out_;
     }
@@ -113,12 +113,12 @@ struct bit_packer {
                 uint32_t processed = simd_count * simd_items_at_a_time;
                 items_to_process -= processed;
                 in_ += processed;
-                tv::utils::inc_ptr(out_, compressed_size(bits, processed));
+                cxxu::inc_ptr(out_, compressed_size(bits, processed));
             }
 
             if (items_to_process > 0) {
                 std_packer(out_, in_, items_to_process);
-                tv::utils::inc_ptr(out_, compressed_size(bits, items_to_process));
+                cxxu::inc_ptr(out_, compressed_size(bits, items_to_process));
             }
         }
 
@@ -139,7 +139,7 @@ struct bit_packer {
         simd_unpacker(out_, in_, simd_count);
 
         uint32_t processed = simd_count * simd_items_at_a_time;
-        tv::utils::inc_ptr(in_, compressed_size(bits, processed));
+        cxxu::inc_ptr(in_, compressed_size(bits, processed));
 
         return (void*) in_;
     }
@@ -154,7 +154,7 @@ struct bit_packer {
         pack_function_type std_unpacker = table_type::unpack_function(bits, false);
 
         std_unpacker(out_, in_, n);
-        tv::utils::inc_ptr(in_, compressed_size(bits, n));
+        cxxu::inc_ptr(in_, compressed_size(bits, n));
 
         return (void*) in_;
     }
@@ -186,13 +186,13 @@ struct bit_packer {
 
                 uint32_t processed = simd_count * simd_items_at_a_time;
                 items_to_process -= processed;
-                tv::utils::inc_ptr(in_, compressed_size(bits, processed));
+                cxxu::inc_ptr(in_, compressed_size(bits, processed));
                 out_ += processed;
             }
 
             if (items_to_process > 0) {
                 std_unpacker(out_, in_, items_to_process);
-                tv::utils::inc_ptr(in_, compressed_size(bits, items_to_process));
+                cxxu::inc_ptr(in_, compressed_size(bits, items_to_process));
             }
         }
 

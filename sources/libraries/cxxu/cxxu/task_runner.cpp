@@ -18,7 +18,7 @@ task_runner::get(void)
 task_runner::task_runner()
 : stop_(false)
 {
-    tv::system::info i;
+    cxxu::system::info i;
 
     for (std::size_t n = 0; n < i.logical_cpus() + 1; n++) {
         threads_.emplace_back(&task_runner::work, this);
@@ -102,7 +102,7 @@ task_runner::work()
         try {
             (*p)();
         } catch (...) {
-            tv::error() << "a task failed: unhandled exception";
+            cxxu::error() << "a task failed: unhandled exception";
 
             // Last resort, should be handle by task itself
             p->set_exception(std::current_exception());

@@ -171,7 +171,7 @@ template <typename PodType>
 struct pack_unpack_table {
     typedef PodType pod_type;
 
-    typedef tv::utils::pod_info<pod_type> pod_info;
+    typedef cxxu::pod_info<pod_type> pod_info;
     static const uint32_t pod_bits = pod_info::bits;
 
     typedef typename mpl::if_<

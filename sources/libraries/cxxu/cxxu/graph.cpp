@@ -40,7 +40,7 @@ graph::add_edge(const std::string& from, const std::string& to)
     modified_ = true;
 }
 
-const tv::list_map&
+const cxxu::list_map&
 graph::resolve()
 {
     if (modified_) {
@@ -107,7 +107,7 @@ graph::to_string()
         all.push_back(name);
     }
 
-    return tv::utils::join(" ", all);
+    return cxxu::join(" ", all);
 }
 
 } // namespace cxxu

@@ -249,7 +249,7 @@ struct obj_list_map {
     to_string() const
     {
         std::ostringstream oss;
-        oss << "obj_list_map: " << tv::utils::join(", ", names);
+        oss << "obj_list_map: " << cxxu::join(", ", names);
         return oss.str();
     }
 

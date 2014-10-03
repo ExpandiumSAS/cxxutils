@@ -71,7 +71,7 @@ struct radixer_traits {
         mpl::pair<mpl::int_<64>, uint64_t>
     > radix_pos_type_map;
 
-    typedef tv::utils::pod_info<pod_type> pod_info;
+    typedef cxxu::pod_info<pod_type> pod_info;
 
     typedef typename mpl::at<
         radix_type_map, mpl::int_<pod_info::bits>

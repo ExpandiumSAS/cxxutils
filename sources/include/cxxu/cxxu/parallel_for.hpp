@@ -10,7 +10,7 @@ namespace cxxu {
 template <typename Body>
 void parallel_for(std::size_t start, std::size_t end, Body b)
 {
-    tv::task_group g;
+    cxxu::task_group g;
 
     for (std::size_t i = start; i < end; ++i) {
         g.add_task(std::bind([b](std::size_t pos){ b(pos); }, i));

@@ -23,11 +23,11 @@ text_block::clear()
 
 std::string
 text_block::block() const
-{ return tv::utils::join("\n", lines_); }
+{ return cxxu::join("\n", lines_); }
 
 std::string
 text_block::indented_block() const
-{ return tv::utils::indent(block()); }
+{ return cxxu::indent(block()); }
 
 
 } // namespace cxxu

@@ -27,7 +27,7 @@ struct radix_sort {
     typedef typename radix_info::radix_pod_type radix_pod_type;
 
     // Base pod info for selected radix pod type
-    typedef tv::utils::pod_info<radix_pod_type> pod_info;
+    typedef cxxu::pod_info<radix_pod_type> pod_info;
 
     // Radix implementation to use
     typedef details::radixer<radix_pod_type, FixedSize> impl_type;

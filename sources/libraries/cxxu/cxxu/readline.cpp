@@ -17,14 +17,14 @@ readline::readline(
 : name_(name),
 continuation_(false),
 params_(params),
-interactive_(tv::utils::interactive())
+interactive_(cxxu::interactive())
 {
     configure_prompt(prompt);
 
-    std::string history_dir = tv::utils::home_directory() + "/.tv";
+    std::string history_dir = cxxu::home_directory() + "/." + name;
     std::string history_file_name = name + "-history";
 
-    history_file(tv::utils::fullpath(history_dir, history_file_name));
+    history_file(cxxu::fullpath(history_dir, history_file_name));
 }
 
 readline::~readline()
@@ -40,7 +40,7 @@ readline::history_file(std::string file)
     history_file_ = file;
 
     // Load history
-    tv::utils::mkfilepath(history_file_);
+    cxxu::mkfilepath(history_file_);
     linenoiseHistoryLoad((char*) history_file_.c_str());
 }
 
@@ -114,7 +114,7 @@ readline::read_line(std::basic_istream<T>* is_ptr)
         }
 
         if (
-            tv::utils::match(line, "^[\\s\\n]*$")
+            cxxu::match(line, "^[\\s\\n]*$")
             &&
             !continuation_
         ) {
@@ -144,12 +144,12 @@ readline::handle_line(input_handler ih, command_handler ch)
         &&
         ch != nullptr
     ) {
-        tv::utils::chomp(input_);
+        cxxu::chomp(input_);
         save_to_history(input_);
 
         std::string command_line = input_.substr(1);
         input_.clear();
-        auto list = tv::utils::split("\\s+", command_line);
+        auto list = cxxu::split("\\s+", command_line);
 
         std::string command;
         std::vector<std::string> args;
@@ -171,7 +171,7 @@ readline::handle_line(input_handler ih, command_handler ch)
         }
     } else {
         while (
-            tv::utils::extract_delimited(
+            cxxu::extract_delimited(
                 input_, user_input_, params_.delim, params_.quote
             )
         ) {
@@ -179,7 +179,7 @@ readline::handle_line(input_handler ih, command_handler ch)
             ih(user_input_);
         }
 
-        if (!tv::utils::match(input_, "^[\\s\\n]*$")) {
+        if (!cxxu::match(input_, "^[\\s\\n]*$")) {
             // Incomplete input, remaining data
             // ask some more
             continuation_ = true;

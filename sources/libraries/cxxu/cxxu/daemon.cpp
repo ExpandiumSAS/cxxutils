@@ -23,25 +23,25 @@ daemon::operator()()
         CXXU_SYSDIE("failed to daemonize");
     }
 
-    tv::logger::get().daemon(true, name_);
+    cxxu::logger::get().daemon(true, name_);
 
-    auto &s = tv::signaler::get();
+    auto &s = cxxu::signaler::get();
 
     s.register_signal(
-        tv::signal::reconfig,
-        [this](tv::signal sig) { reconfig(); }
+        cxxu::signal::reconfig,
+        [this](cxxu::signal sig) { reconfig(); }
     );
     s.register_signal(
-        tv::signal::quit,
-        [this](tv::signal sig) { quit(); }
+        cxxu::signal::quit,
+        [this](cxxu::signal sig) { quit(); }
     );
     s.register_signal(
-        tv::signal::user1,
-        [this](tv::signal sig) { user1(); }
+        cxxu::signal::user1,
+        [this](cxxu::signal sig) { user1(); }
     );
     s.register_signal(
-        tv::signal::user2,
-        [this](tv::signal sig) { user2(); }
+        cxxu::signal::user2,
+        [this](cxxu::signal sig) { user2(); }
     );
 
     init();

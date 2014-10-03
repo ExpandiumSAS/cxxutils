@@ -112,14 +112,14 @@ timed_log_item timed(const std::string& label)
     do {                                                                      \
         std::ostringstream o__;                                               \
         o__ << WHAT;                                                          \
-        throw tv::exception(o__.str());                                       \
+        throw cxxu::exception(o__.str());                                       \
     } while (0);
 
 #define CXXU_DIE_WITH(WHAT, TYPE, EX)                                           \
     do {                                                                      \
         std::string s__;                                                      \
         {                                                                     \
-            tv::log_item l__ = tv::TYPE();                                    \
+            cxxu::log_item l__ = cxxu::TYPE();                                    \
             l__ << WHAT;                                                      \
             s__ = l__.str();                                                  \
         }                                                                     \

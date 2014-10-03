@@ -13,7 +13,7 @@ namespace cxxu {
 template <typename C>
 struct obj_list_map_element
 {
-    typedef typename tv::utils::extract_value<C>::type value_type;
+    typedef typename cxxu::extract_value<C>::type value_type;
     typedef is_shared_ptr<value_type> is_shared_ptr_type;
 
     typedef typename is_shared_ptr_type::element_type element_type;
@@ -39,7 +39,7 @@ public:
     typedef typename obj_list_map_element<C>::type value_type;
     typedef typename obj_list_map_element<C>::is_shared_ptr_type is_shared_ptr_type;
     typedef value_type& reference;
-    typedef typename tv::utils::extract_iterator<C>::type iterator;
+    typedef typename cxxu::extract_iterator<C>::type iterator;
 
     obj_list_map_iterator()
     : it_()

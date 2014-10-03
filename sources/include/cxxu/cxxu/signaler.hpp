@@ -21,25 +21,25 @@ enum class signal
     user2
 };
 
-typedef std::function<void(tv::signal)> signal_function;
+typedef std::function<void(cxxu::signal)> signal_function;
 
 class TIMEVAULT_API signaler
 {
 public:
     static signaler& get();
 
-    void register_signal(tv::signal s, signal_function sf);
+    void register_signal(cxxu::signal s, signal_function sf);
 
 private:
     friend void signal_handler(int sig);
 
     typedef std::vector<signal_function> signal_functions;
-    typedef std::map<tv::signal, signal_functions> signal_map;
+    typedef std::map<cxxu::signal, signal_functions> signal_map;
 
     signaler();
     ~signaler();
 
-    void handle_signal(tv::signal s);
+    void handle_signal(cxxu::signal s);
 
     signal_map m_;
 };

@@ -107,7 +107,7 @@ TIMEVAULT_API
 unsigned long long human_readable_size(const std::string& expr);
 
 TIMEVAULT_API
-void split(const std::string& re, const std::string& expr, tv::string_list& list);
+void split(const std::string& re, const std::string& expr, cxxu::string_list& list);
 
 TIMEVAULT_API
 void chomp(std::string& s);
@@ -116,7 +116,7 @@ TIMEVAULT_API
 void unquote(std::string& s);
 
 TIMEVAULT_API
-tv::string_list glob(const std::string& expr);
+cxxu::string_list glob(const std::string& expr);
 
 TIMEVAULT_API
 bool match(const std::string& expr, const std::string& re);
@@ -153,10 +153,10 @@ type_info(void)
 { return demangle_type_name(typeid(T).name()); }
 
 inline
-tv::string_list
+cxxu::string_list
 split(const std::string& re, const std::string& expr)
 {
-    tv::string_list list;
+    cxxu::string_list list;
     split(re, expr, list);
 
     return std::move(list);

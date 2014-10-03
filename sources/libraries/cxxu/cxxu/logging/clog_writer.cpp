@@ -8,7 +8,7 @@ namespace cxxu {
 namespace logging {
 
 clog_writer::clog_writer()
-: interactive_(tv::utils::interactive())
+: interactive_(cxxu::interactive())
 {}
 
 clog_writer::~clog_writer()

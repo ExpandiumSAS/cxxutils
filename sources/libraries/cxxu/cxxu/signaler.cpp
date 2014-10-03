@@ -7,29 +7,29 @@ namespace cxxu {
 void
 signal_handler(int sig)
 {
-    tv::signal s = tv::signal::none;
+    cxxu::signal s = cxxu::signal::none;
 
     switch (sig) {
         case SIGHUP:
-        s = tv::signal::reconfig;
+        s = cxxu::signal::reconfig;
         break;
         case SIGINT:
         case SIGQUIT:
         case SIGTERM:
-        s = tv::signal::quit;
+        s = cxxu::signal::quit;
         break;
         case SIGUSR1:
-        s = tv::signal::user1;
+        s = cxxu::signal::user1;
         break;
         case SIGUSR2:
-        s = tv::signal::user2;
+        s = cxxu::signal::user2;
         break;
         default:
-        s = tv::signal::none;
+        s = cxxu::signal::none;
         break;
     }
 
-    if (s != tv::signal::none) {
+    if (s != cxxu::signal::none) {
         signaler::get().handle_signal(s);
     }
 }
@@ -55,11 +55,11 @@ signaler::~signaler()
 {}
 
 void
-signaler::register_signal(tv::signal s, signal_function sf)
+signaler::register_signal(cxxu::signal s, signal_function sf)
 { m_[s].push_back(sf); }
 
 void
-signaler::handle_signal(tv::signal s)
+signaler::handle_signal(cxxu::signal s)
 {
     auto it = m_.find(s);
 

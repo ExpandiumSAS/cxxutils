@@ -369,7 +369,7 @@ human_readable_size(const std::string& expr)
 }
 
 void
-split(const std::string& re, const std::string& expr, tv::string_list& list)
+split(const std::string& re, const std::string& expr, cxxu::string_list& list)
 {
     using namespace boost::xpressive;
 
@@ -407,12 +407,12 @@ unquote(std::string& s)
     boost::algorithm::trim_if(s, boost::algorithm::is_any_of("\""));
 }
 
-tv::string_list
+cxxu::string_list
 glob(const std::string& expr)
 {
     glob_t g;
-    tv::string_list patterns = split("\\s+", expr);
-    tv::string_list matches;
+    cxxu::string_list patterns = split("\\s+", expr);
+    cxxu::string_list matches;
     int flags = 0;
 
     if (!patterns.empty()) {

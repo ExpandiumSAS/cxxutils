@@ -26,7 +26,7 @@ public:
     void add_node(const std::string& name, std::size_t weight = 0);
     void add_edge(const std::string& from, const std::string& to);
 
-    const tv::list_map& resolve();
+    const cxxu::list_map& resolve();
 
     std::string to_string();
 
@@ -35,18 +35,18 @@ private:
         std::string name;
         std::size_t dep_count;
         std::size_t weight;
-        tv::list_map edges;
+        cxxu::list_map edges;
     };
 
-    typedef tv::obj_list_map<node> node_list_map;
+    typedef cxxu::obj_list_map<node> node_list_map;
 
     void resolve(const node& n);
 
     graph_type type_;
     node_list_map nodes_;
-    tv::list_map resolved_;
-    tv::list_map unresolved_;
-    tv::list_map ordered_;
+    cxxu::list_map resolved_;
+    cxxu::list_map unresolved_;
+    cxxu::list_map ordered_;
     bool modified_;
 };
 
