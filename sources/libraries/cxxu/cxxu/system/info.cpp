@@ -15,6 +15,7 @@
 #if defined(BSD)
 #include <sys/sysctl.h>
 #endif
+#endif
 
 
 #include <cxxu/system/info.hpp>
@@ -43,6 +44,7 @@ void
 info::load()
 {
     cpu_info();
+    mem_info();
 }
 
 void
@@ -78,7 +80,6 @@ void
 info::mem_info()
 {
     physical_memory_ = 0;
-    bool ok = false;
 
 #if defined(__unix__) || defined(__unix) || defined(unix) || (defined(__APPLE__) && defined(__MACH__))
     /* UNIX variants. ------------------------------------------- */
@@ -95,9 +96,8 @@ info::mem_info()
     int64_t size = 0;               /* 64-bit */
     size_t len = sizeof( size );
     if ( sysctl( mib, 2, &size, &len, NULL, 0 ) == 0 ) {
-        ok = true;
         physical_memory_ (uint64_t)size;
-    } 
+    }
 
 #elif defined(_SC_AIX_REALMEM)
     /* AIX. ----------------------------------------------------- */
@@ -128,9 +128,8 @@ info::mem_info()
     
 #endif /* sysctl and sysconf variants */
 #endif
-    ok &= (physical_memory_ > 0);
-    if (!ok) {
-        CXXU_DIE("failed to physical memory size");
+    if (physical_memory_ == 0) {
+        CXXU_DIE("failed to get physical memory size");
     }
 }
 
