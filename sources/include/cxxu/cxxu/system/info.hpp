@@ -15,12 +15,15 @@ public:
     ~info();
 
     uint32_t logical_cpus() const;
+    uint64_t physical_memory() const;
 
 private:
     void load();
     void cpu_info();
+    void mem_info();
 
     uint32_t logical_cpus_;
+    uint64_t physical_memory_;
 };
 
 } // namespace system
