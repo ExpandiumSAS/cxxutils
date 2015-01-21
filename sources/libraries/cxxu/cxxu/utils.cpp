@@ -17,6 +17,7 @@
 #include <glob.h>
 #endif
 
+
 namespace cxxu {
 
 const std::size_t progress_ratio_width = 3;
