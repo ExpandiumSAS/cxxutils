@@ -32,7 +32,6 @@ namespace moodycamel { namespace debug {
 		std::mutex m;
 	};
 } }
-#define
 #endif
 
 namespace moodycamel { namespace debug {
