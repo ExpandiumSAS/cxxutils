@@ -17,6 +17,7 @@
 #endif
 #endif
 
+#include <stdint.h>
 
 #include <cxxu/system/info.hpp>
 #include <cxxu/logging.hpp>
