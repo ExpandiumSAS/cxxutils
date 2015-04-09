@@ -17,13 +17,15 @@ daemon::~daemon()
 {}
 
 void
-daemon::operator()()
+daemon::operator()(bool daemonize)
 {
-    if (::daemon(0, 0) == -1) {
-        CXXU_SYSDIE("failed to daemonize");
-    }
+    if (daemonize) {
+        if (::daemon(0, 0) == -1) {
+            CXXU_SYSDIE("failed to daemonize");
+        }
 
-    cxxu::logger::get().daemon(true, name_);
+        cxxu::logger::get().daemon(true, name_);
+    }
 
     auto &s = cxxu::signaler::get();
 

@@ -13,7 +13,7 @@ public:
     daemon(const std::string& name);
     virtual ~daemon();
 
-    void operator()();
+    void operator()(bool daemonize = true);
 
 private:
     virtual void init();
