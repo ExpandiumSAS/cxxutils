@@ -332,8 +332,9 @@ basename(const std::string& path, const std::string& ext)
     }
 
     auto bn = ppath.filename().string();
+    auto pos = bn.find_last_of(ext);
 
-    if ((auto pos = bn.find_last_of(ext)) != std::string::npos) {
+    if (pos != std::string::npos) {
         bn.erase(pos);
     }
 
