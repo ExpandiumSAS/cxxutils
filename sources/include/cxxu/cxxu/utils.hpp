@@ -100,7 +100,7 @@ std::string fullpath(const std::string& rel);
 CXXUTILS_API
 std::string fullpath(const std::string& dir, const std::string& file);
 CXXUTILS_API
-std::string basename(const std::string& path);
+std::string basename(const std::string& path, const std::string& ext = "");
 CXXUTILS_API
 std::string dirname(const std::string& path);
 CXXUTILS_API

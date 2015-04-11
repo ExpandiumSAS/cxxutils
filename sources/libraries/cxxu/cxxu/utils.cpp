@@ -320,14 +320,24 @@ fullpath(const std::string& dir, const std::string& file)
 }
 
 std::string
-basename(const std::string& path)
+basename(const std::string& path, const std::string& ext)
 {
     namespace fs = boost::filesystem;
     fs::path ppath(path);
 
     ppath.normalize();
 
-    return ppath.filename().string();
+    if (ext.empty()) {
+        return ppath.filename().string();
+    }
+
+    auto bn = ppath.filename().string();
+
+    if ((auto pos = bn.find_last_of(ext)) != std::string::npos) {
+        bn.erase(pos);
+    }
+
+    return bn;
 }
 
 std::string
