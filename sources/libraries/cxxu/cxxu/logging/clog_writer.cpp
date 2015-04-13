@@ -17,10 +17,6 @@ clog_writer::~clog_writer()
 void
 clog_writer::operator()(level l, const std::string& what)
 {
-    if (!interactive_ && (l != level::error || l != level::die)) {
-        return;
-    }
-
     // If running under prove or TAP::Harness, don't ruin the TAP output
     bool harness_active = (std::getenv("HARNESS_ACTIVE") != nullptr);
 
