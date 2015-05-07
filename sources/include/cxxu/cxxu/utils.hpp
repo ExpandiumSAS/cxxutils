@@ -196,6 +196,18 @@ indent(const std::string& what)
     return std::move(s);
 }
 
+inline
+std::string
+trim_left(const std::string& str, const char* tokens = " \t")
+{
+    std::string::size_type begin = str.find_first_not_of(tokens);
+    if (begin == std::string::npos) {
+        begin = str.size();
+    }
+
+    return std::string(str, begin);
+}
+
 template <typename T>
 struct make_vector {
     typedef std::vector<T> vector_type;
