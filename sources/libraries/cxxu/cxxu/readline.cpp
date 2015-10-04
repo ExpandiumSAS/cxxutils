@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 
 #include <boost/algorithm/string.hpp>
 
