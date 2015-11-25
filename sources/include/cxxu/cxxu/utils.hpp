@@ -105,6 +105,8 @@ CXXUTILS_API
 std::string dirname(const std::string& path);
 CXXUTILS_API
 unsigned long long human_readable_size(const std::string& expr);
+CXXUTILS_API
+std::string human_readable_size(uint64_t size, const std::string& user_unit = "B");
 
 CXXUTILS_API
 void split(const std::string& re, const std::string& expr, cxxu::string_list& list);

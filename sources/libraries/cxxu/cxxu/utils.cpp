@@ -1,10 +1,12 @@
+#include <ios>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <stdexcept>
+#include <regex>
 
 #include <boost/filesystem.hpp>
-#include <boost/xpressive/xpressive.hpp>
 #include <boost/md5.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
@@ -17,12 +19,23 @@
 #include <glob.h>
 #endif
 
-
 namespace cxxu {
 
 const std::size_t progress_ratio_width = 3;
 const std::size_t progress_bar_chars = 4;
-const std::size_t progress_bar_extra_width = progress_ratio_width + progress_bar_chars;
+const std::size_t progress_bar_extra_width =
+    progress_ratio_width + progress_bar_chars;
+
+const std::size_t kilobytes = 1024;
+const std::size_t megabytes = kilobytes * 1024;
+const std::size_t gigabytes = megabytes * 1024;
+const std::size_t terabytes = gigabytes * 1024;
+const std::size_t petabytes = terabytes * 1024;
+
+struct human_size_conv {
+    const char* unit;
+    std::size_t scale;
+};
 
 bool
 interactive(void)
@@ -359,24 +372,30 @@ dirname(const std::string& path)
 unsigned long long
 human_readable_size(const std::string& expr)
 {
-    using namespace boost::xpressive;
-    sregex sizeexpr = sregex::compile("(\\d+)(?:(K|M|G))?");
-    smatch what;
-    unsigned long long unit = 1;
+    static std::vector<human_size_conv> ct = {
+        { "K", kilobytes },
+        { "M", megabytes },
+        { "G", gigabytes },
+        { "T", terabytes },
+        { "P", petabytes }
+    };
+
+    std::regex sizeexpr("(\\d+)(?:(K|M|G|T|P))?");
+    std::smatch what;
+    unsigned long long scale = 1;
     unsigned long long size = 0;
 
     if (regex_match(expr, what, sizeexpr)) {
         size = to_num<unsigned long long>(what[1]);
 
-        if (what[2] == "K") {
-            unit = 1024;
-        } else if (what[2] == "M") {
-            unit = 1024 * 1024;
-        } else if (what[2] == "G") {
-            unit = 1024 * 1024 * 1024;
+        for (const auto& c : ct) {
+            if (what[2] == c.unit) {
+                scale = c.scale;
+                break;
+            }
         }
 
-        size *= unit;
+        size *= scale;
     } else {
         throw std::runtime_error("invalid size: " + expr);
     }
@@ -384,17 +403,58 @@ human_readable_size(const std::string& expr)
     return size;
 }
 
+std::string
+human_readable_size(uint64_t size, const std::string& user_unit)
+{
+    static std::vector<human_size_conv> ct = {
+        { "P", petabytes },
+        { "T", terabytes },
+        { "G", gigabytes },
+        { "M", megabytes },
+        { "K", kilobytes }
+    };
+
+    std::ostringstream oss;
+    double value = size;
+    const char* unit = "";
+    std::size_t scale = 1;
+
+    for (const auto& c : ct) {
+        if (size >= c.scale) {
+            scale = c.scale;
+            unit = c.unit;
+            break;
+        }
+    }
+
+    value /= scale;
+
+    char buf[50 + 1];
+
+    std::snprintf(buf, sizeof(buf), "%.2f", value);
+
+    oss << buf << unit << user_unit;
+
+    return oss.str();
+}
+
 void
 split(const std::string& re, const std::string& expr, cxxu::string_list& list)
 {
-    using namespace boost::xpressive;
-
     list.clear();
 
-    sregex delim = sregex::compile(re);
+    if (expr.empty()) {
+        return;
+    }
 
-    sregex_token_iterator cur(expr.begin(), expr.end(), delim, -1);
-    sregex_token_iterator end;
+    std::regex delim(re);
+
+    auto cur = std::sregex_token_iterator(
+        expr.begin(), expr.end(),
+        delim,
+        -1
+    );
+    auto end = std::sregex_token_iterator();
 
     for( ; cur != end; ++cur ) {
         list.push_back(*cur);
@@ -455,10 +515,17 @@ glob(const std::string& expr)
 bool
 match(const std::string& expr, const std::string& re)
 {
-    using namespace boost::xpressive;
-    sregex sre = sregex::compile(re);
+    std::regex mre(re);
 
-    return regex_match(expr, sre);
+    return regex_match(expr, mre);
+}
+
+bool
+match(const std::string& expr, const std::string& re, std::smatch& m)
+{
+    std::regex mre(re);
+
+    return regex_match(expr, m, mre);
 }
 
 bool
