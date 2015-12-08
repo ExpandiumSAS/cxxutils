@@ -210,6 +210,26 @@ trim_left(const std::string& str, const char* tokens = " \t")
     return std::string(str, begin);
 }
 
+inline
+std::string
+trim_right(const std::string& str, const char* tokens = " \t")
+{
+    std::string::size_type end = str.find_last_not_of(tokens);
+    if (end == std::string::npos) {
+        end = -1;
+    }
+
+    return std::string(str, 0, end+1);
+}
+
+inline
+std::string
+trim(const std::string& str, const char* tokens = " \t")
+{
+    return trim_left(trim_right(str, tokens), tokens);
+}
+
+
 template <typename T>
 struct make_vector {
     typedef std::vector<T> vector_type;
