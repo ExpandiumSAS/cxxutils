@@ -252,7 +252,7 @@ write_file(const std::string& file, write_file_cb cb)
     try {
         mkfilepath(file);
     } catch (const std::exception& e) {
-        cxxu::log()
+        error()
             << "failed to create path for "
             << file << ": " << e.what()
             ;
@@ -272,7 +272,7 @@ write_file(const std::string& file, write_file_cb cb)
             rmfile(backup_file);
             rmfile(backup_ok_file);
 
-            log()
+            error()
                 << "failed to backup file "
                 << file << ": " << e.what()
                 ;
@@ -305,7 +305,7 @@ write_file(const std::string& file, write_file_cb cb)
         rmfile(file);
         rmfile(write_ok_file);
 
-        log()
+        error()
             << "failed to save file "
             << file << ": " << e.what()
             ;
@@ -319,7 +319,7 @@ write_file(const std::string& file, write_file_cb cb)
             } catch (...) {
                 error()
                     << "WHOA ! Failed to restore "
-                    << file
+                    << file << " from backup"
                     ;
 
                 throw;
@@ -345,6 +345,87 @@ write_file(const std::string& file, write_file_cb cb)
     }
 
     // Phewww....
+    return true;
+}
+
+bool
+read_file(const std::string& file, read_file_cb cb)
+{
+    bool has_file = file_exists(file);
+    auto backup_file = file + ".old";
+    bool has_backup = file_exists(backup_file);
+    auto backup_ok_file = backup_file + ".ok";
+    bool backup_ok = file_exists(backup_ok_file);
+    auto read_ok_file = file + ".ok";
+    bool read_ok = file_exists(read_ok_file);
+
+    bool can_restore = has_backup && backup_ok;
+    bool can_read = has_file && read_ok;
+
+    if (can_read) {
+        if (can_restore) {
+            log() << "removing stale backup for " << file;
+            rmfile(backup_file);
+            rmfile(backup_ok_file);
+        }
+    } else if (can_restore) {
+        log() << "restoring " << file << " from backup";
+
+        try {
+            rename(backup_file, file);
+            rename(backup_ok_file, read_ok_file);
+            log() << file << " restored from backup";
+        } catch (...) {
+            error()
+                << "WHOA ! Failed to restore "
+                << file << " from backup"
+                ;
+
+            throw;
+        }
+    } else {
+        // Can't read, can't restore... What's going on ?
+        if (!has_file && !has_backup) {
+            // Nothing was saved, nothing to read
+            return true;
+        } else {
+            if (has_file) {
+                error()
+                    << "cannot read " << file
+                    << ", it's not marked as ok"
+                    ;
+            }
+
+            if (has_backup) {
+                error()
+                    << "cannot restore " << file
+                    << ", backup isn't marked as ok"
+                    ;
+            }
+
+            return false;
+        }
+    }
+
+    if (file_exists(file) && file_exists(read_ok_file)) {
+        try {
+            std::ifstream ifs(file);
+
+            if (!ifs.is_open()) {
+                throw std::runtime_error("failed to open " + file);
+            }
+
+            cb(ifs);
+        } catch (const std::exception& e) {
+            log()
+                << "failed to read file "
+                << file << ": " << e.what()
+                ;
+
+            return false;
+        }
+    }
+
     return true;
 }
 
