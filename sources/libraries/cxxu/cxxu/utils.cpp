@@ -275,6 +275,10 @@ rmfile(const std::string& path)
     namespace fs = boost::filesystem;
     fs::path ppath(path);
 
+    if (!fs::exists(ppath)) {
+        return false;
+    }
+
     return fs::remove_all(ppath);
 }
 
