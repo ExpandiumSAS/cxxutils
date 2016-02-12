@@ -11,6 +11,7 @@
 #include <boost/algorithm/string/trim.hpp>
 
 #include <cxxu/utils.hpp>
+#include <cxxu/logging.hpp>
 
 #ifdef UNIX
 #include <unistd.h>
@@ -235,6 +236,115 @@ copy_file(const std::string& from, const std::string& to)
     source.close();
     dest.close();
 
+    return true;
+}
+
+bool
+write_file(const std::string& file, write_file_cb cb)
+{
+    auto backup_file = file + ".old";
+    auto backup_ok_file = backup_file + ".ok";
+    bool backup_ok = false;
+    bool backup_needed = file_exists(file);
+    auto write_ok_file = file + ".ok";
+    bool write_ok = false;
+
+    try {
+        mkfilepath(file);
+    } catch (const std::exception& e) {
+        cxxu::log()
+            << "failed to create path for "
+            << file << ": " << e.what()
+            ;
+
+        return false;
+    }
+
+    if (backup_needed) {
+        try {
+            rename(file, backup_file);
+            backup_ok = touch_file(backup_ok_file);
+
+            if (!backup_ok) {
+                throw std::runtime_error("failed to create " + backup_ok_file);
+            }
+        } catch (const std::exception& e) {
+            rmfile(backup_file);
+            rmfile(backup_ok_file);
+
+            log()
+                << "failed to backup file "
+                << file << ": " << e.what()
+                ;
+
+            return false;
+        }
+    }
+
+    try {
+        std::ofstream ofs(file, std::ios::trunc);
+
+        if (!ofs.is_open()) {
+            throw std::runtime_error("failed to open " + file);
+        }
+
+        cb(ofs);
+        ofs << std::flush;
+
+        if (!ofs) {
+            throw std::runtime_error("failed to write " + file);
+        }
+
+        ofs.close();
+        write_ok = touch_file(write_ok_file);
+
+        if (!write_ok) {
+            throw std::runtime_error("failed to create " + write_ok_file);
+        }
+    } catch (const std::exception& e) {
+        rmfile(file);
+        rmfile(write_ok_file);
+
+        log()
+            << "failed to save file "
+            << file << ": " << e.what()
+            ;
+
+        if (backup_needed) {
+            log() << "restoring " << file << " from backup";
+
+            try {
+                rename(backup_file, file);
+                rename(backup_ok_file, write_ok_file);
+            } catch (...) {
+                error()
+                    << "WHOA ! Failed to restore "
+                    << file
+                    ;
+
+                throw;
+            }
+
+            log() << file << " restored from backup";
+        }
+
+        return false;
+    }
+
+    rmfile(backup_file);
+    rmfile(backup_ok_file);
+
+    if (
+        !(file_exists(file) && cxxu::file_exists(write_ok_file))
+        ||
+        file_exists(backup_file)
+        ||
+        file_exists(backup_ok_file)
+    ) {
+        warning() << file << " has bizarre state, please check";
+    }
+
+    // Phewww....
     return true;
 }
 

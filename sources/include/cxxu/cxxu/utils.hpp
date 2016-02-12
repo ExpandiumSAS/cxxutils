@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#include <ios>
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -12,6 +15,7 @@
 #include <chrono>
 #include <typeinfo>
 #include <type_traits>
+#include <functional>
 
 #include <boost/mpl/if.hpp>
 
@@ -83,6 +87,12 @@ CXXUTILS_API
 bool truncate_file(const std::string& path, std::size_t size);
 CXXUTILS_API
 bool copy_file(const std::string& from, const std::string& to);
+
+using write_file_cb = std::function<void(std::ofstream& ifs)>;
+
+CXXUTILS_API
+bool write_file(const std::string& file, write_file_cb cb);
+
 CXXUTILS_API
 uint64_t file_size(const std::string& path);
 CXXUTILS_API
