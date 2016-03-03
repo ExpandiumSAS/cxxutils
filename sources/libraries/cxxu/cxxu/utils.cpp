@@ -1,5 +1,19 @@
+#include <unistd.h>
+#include <cxxabi.h>
+#include <glob.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+#if defined(LINUX)
+#include <sys/sendfile.h>
+#elif defined(DARWIN)
+#include <sys/socket.h>
+#include <sys/uio.h>
+#endif
+
 #include <ios>
 #include <iostream>
+#include <cstdio>
 #include <iomanip>
 #include <fstream>
 #include <string>
@@ -12,13 +26,6 @@
 
 #include <cxxu/utils.hpp>
 #include <cxxu/logging.hpp>
-
-#ifdef UNIX
-#include <unistd.h>
-#include <cstdio>
-#include <cxxabi.h>
-#include <glob.h>
-#endif
 
 namespace cxxu {
 
@@ -224,17 +231,23 @@ copy_file(const std::string& from, const std::string& to)
         to_ = to;
     }
 
-    std::ifstream source(from, std::ios::binary);
-    std::ofstream dest(to_, std::ios::binary | std::ios::trunc);
+    int src = ::open(from.c_str(), O_RDONLY, 0);
 
-    if (!(source.is_open() && dest.is_open())) {
-        return false;
+    CXXU_SYSDIE_IF(src == -1, "failed to open file: " << from);
+
+    int dst = ::creat(to_.c_str(), 0644);
+
+    if (dst == -1) {
+        ::close(src);
+        CXXU_DIE("failed to create file: " << to_);
     }
 
-    dest << source.rdbuf();
+    auto ret = send_file(dst, src, nullptr, file_size(from));
 
-    source.close();
-    dest.close();
+    ::close(src);
+    ::close(dst);
+
+    CXXU_SYSDIE_IF(ret == -1, "failed to send file: " << from);
 
     return true;
 }
@@ -857,6 +870,28 @@ escape(const std::string& s)
     }
 
     return std::move(esc);
+}
+
+ssize_t
+send_file(int out_fd, int in_fd, off_t* offset, size_t count)
+{
+#if defined(LINUX)
+    return ::sendfile(out_fd, in_fd, offset, count);
+#elif defined(DARWIN)
+    off_t ofs = offset ? *offset : 0;
+    off_t bytes = count;
+    auto ret = ::sendfile(in_fd, out_fd, ofs, &bytes, NULL, 0);
+
+    if (ret == -1) {
+        return -1;
+    }
+
+    if (offset) {
+        *offset += bytes;
+    }
+
+    return bytes;
+#endif
 }
 
 } // namespace cxxu

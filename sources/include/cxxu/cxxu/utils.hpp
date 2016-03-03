@@ -27,7 +27,7 @@
 // Explanation:
 // http://cpptalk.wordpress.com/2009/09/12/
 //   substitution-failure-is-not-an-error-2/
-#define CXXU_MAKE_HAS(WHAT)                                  \
+#define CXXU_MAKE_HAS(WHAT)                                \
 template <typename T>                                      \
 struct has_ ## WHAT {                                      \
     struct Fallback { int WHAT; };                         \
@@ -44,7 +44,7 @@ struct has_ ## WHAT {                                      \
     static bool const value = sizeof(f<Derived>(0)) == 2;  \
 };
 
-#define CXXU_MAKE_HAS_MEMBER(WHAT, PARAMS)                   \
+#define CXXU_MAKE_HAS_MEMBER(WHAT, PARAMS)                 \
 template <typename K>                                      \
 struct has_member_ ## WHAT                                 \
 {                                                          \
@@ -154,6 +154,9 @@ CXXUTILS_API
 std::string escape_for_string(const char c);
 CXXUTILS_API
 std::string escape(const std::string& s);
+CXXUTILS_API
+ssize_t
+send_file(int out_fd, int in_fd, off_t* offset, size_t count);
 
 template <typename T>
 inline

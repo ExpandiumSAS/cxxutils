@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
+#include <system_error>
 #include <chrono>
 
 #include <cxxutils/config.h>
@@ -108,25 +109,53 @@ timed_log_item timed(const std::string& label)
 
 } // namespace cxxu
 
-#define CXXU_THROW(WHAT)                                                        \
+#define CXXU_THROW(WHAT)                                                      \
     do {                                                                      \
         std::ostringstream o__;                                               \
         o__ << WHAT;                                                          \
-        throw cxxu::exception(o__.str());                                       \
+        throw cxxu::exception(o__.str());                                     \
     } while (0);
 
-#define CXXU_DIE_WITH(WHAT, TYPE, EX)                                           \
+#define CXXU_DIE_BEGIN(WHAT, TYPE)                                            \
     do {                                                                      \
         std::string s__;                                                      \
         {                                                                     \
-            cxxu::log_item l__ = cxxu::TYPE();                                    \
+            cxxu::log_item l__ = cxxu::TYPE();                                \
             l__ << WHAT;                                                      \
             s__ = l__.str();                                                  \
-        }                                                                     \
-        throw EX(s__);                                                        \
+        }
+
+#define CXXU_DIE_END()                                                        \
     } while (0);
 
-#define CXXU_DIE(WHAT) CXXU_DIE_WITH(WHAT, die, std::runtime_error)
-#define CXXU_SYSDIE(WHAT) CXXU_DIE_WITH(WHAT, system_error, std::runtime_error)
+#define CXXU_DIE(WHAT)                                                        \
+    CXXU_DIE_BEGIN(WHAT, die)                                                 \
+        throw std::runtime_error(s__);                                        \
+    CXXU_DIE_END()
+
+#define CXXU_DIE_IF(COND, WHAT)                                               \
+    if (COND) {                                                               \
+        CXXU_DIE(WHAT)                                                        \
+    }
+
+#define CXXU_DIE_UNLESS(COND, WHAT)                                           \
+    if (!(COND)) {                                                            \
+        CXXU_DIE(WHAT)                                                        \
+    }
+
+#define CXXU_SYSDIE(WHAT)                                                     \
+    CXXU_DIE_BEGIN(WHAT, die)                                                 \
+        throw std::system_error(errno, std::system_category(), s__);          \
+    CXXU_DIE_END()
+
+#define CXXU_SYSDIE_IF(COND, WHAT)                                            \
+    if (COND) {                                                               \
+        CXXU_SYSDIE(WHAT)                                                     \
+    }
+
+#define CXXU_SYSDIE_UNLESS(COND, WHAT)                                        \
+    if (!(COND)) {                                                            \
+        CXXU_SYSDIE(WHAT)                                                     \
+    }
 
 #endif // __CXXU_LOGGING_H__
