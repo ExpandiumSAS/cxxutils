@@ -245,6 +245,18 @@ trim(const std::string& str, const char* tokens = " \t")
     return trim_left(trim_right(str, tokens), tokens);
 }
 
+template<typename T>
+std::string to_string_fr(T i) {
+    std::string str = std::to_string(i);
+
+    for(int i = str.size(), current_digit = 0; i > 0; --i, ++current_digit) {
+        if (current_digit && !(current_digit % 3)) {
+            str.insert(i, 1, '.');
+        }
+    }
+
+    return str;
+}
 
 template <typename T>
 struct make_vector {

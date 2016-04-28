@@ -55,3 +55,14 @@ BOOST_AUTO_TEST_CASE(trim)
     BOOST_CHECK_EQUAL(cxxu::trim("A"), "A");
     BOOST_CHECK_EQUAL(cxxu::trim("ABCDEF"), "ABCDEF");
 }
+
+BOOST_AUTO_TEST_CASE(to_string_fr)
+{
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(1), "1");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(123), "123");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(1234), "1.234");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(12345), "12.345");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(123456), "123.456");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(1234567), "1.234.567");
+    BOOST_CHECK_EQUAL(cxxu::to_string_fr(12345678), "12.345.678");
+}
