@@ -830,7 +830,7 @@ escape(const char c)
         }
     }
 
-    return std::move(esc);
+    return esc;
 }
 
 std::string
@@ -857,7 +857,7 @@ escape_for_string(const char c)
         }
     }
 
-    return std::move(esc);
+    return esc;
 }
 
 std::string
@@ -869,7 +869,7 @@ escape(const std::string& s)
         esc += escape_for_string(c);
     }
 
-    return std::move(esc);
+    return esc;
 }
 
 ssize_t

@@ -177,7 +177,7 @@ split(const std::string& re, const std::string& expr)
     cxxu::string_list list;
     split(re, expr, list);
 
-    return std::move(list);
+    return list;
 }
 
 template <typename S>
@@ -196,7 +196,7 @@ join(const std::string& sep, const std::vector<S>& v)
         joined += v[i];
     }
 
-    return std::move(joined);
+    return joined;
 }
 
 inline
@@ -211,7 +211,7 @@ indent(const std::string& what)
         s = pad + join(sep + pad, split(sep, what));
     }
 
-    return std::move(s);
+    return s;
 }
 
 inline
