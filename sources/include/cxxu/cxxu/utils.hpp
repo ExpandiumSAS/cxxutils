@@ -62,77 +62,140 @@ struct has_member_ ## WHAT                                 \
 
 #define CXXU_AUTO_RET(x) -> decltype(x) { return x; }
 
+/// @file
+
+/// Collections of file and string utilities not unlike those found in Perl
 namespace cxxu {
 
+/// Checks if current program is running interactively
+///
+/// @return true if current program is running interactively
 CXXUTILS_API
 bool interactive(void);
+
+/// Display a progress bar
+///
+/// @param x current value
+/// @param n maximum value
+/// @param w progress bar width
+/// @return true if current program is running interactively
 CXXUTILS_API
 void set_progress(std::size_t x, std::size_t n, std::size_t w = 50);
+
+/// Clear a progress bar
+///
+/// @param w progress bar width
 CXXUTILS_API
 void clear_progress(std::size_t w = 50);
 
+/// Path to user's HOME directory
 CXXUTILS_API
 std::string home_directory(void);
+
+/// Checks if path exists
 CXXUTILS_API
 bool exists(const std::string& path);
+
+/// Checks if directory exists
 CXXUTILS_API
 bool directory_exists(const std::string& path);
+
+/// Checks if file exists
 CXXUTILS_API
 bool file_exists(const std::string& path);
+
+/// Same as the touch system utility
 CXXUTILS_API
 bool touch_file(const std::string& path);
+
+/// Truncates/creates file at the specified size
 CXXUTILS_API
 bool truncate_file(const std::string& path, std::size_t size);
+
+/// Copies file
 CXXUTILS_API
 bool copy_file(const std::string& from, const std::string& to);
 
 using write_file_cb = std::function<void(std::ofstream& ofs)>;
 
+/// Write a file in a transaction like manner
+/// Calls cb when you should write
 CXXUTILS_API
 bool write_file(const std::string& file, write_file_cb cb);
 
 using read_file_cb = std::function<void(std::ifstream& ifs)>;
 
+/// Reads a file in a transaction like manner
+/// Calls cb when you should read
 CXXUTILS_API
 bool read_file(const std::string& file, read_file_cb cb);
 
+/// Returns file size in bytes
 CXXUTILS_API
 uint64_t file_size(const std::string& path);
+
+/// Creates a path ala mkdir -p
 CXXUTILS_API
 bool mkpath(const std::string& path);
+
+/// Removes a path ala rm -rf
 CXXUTILS_API
 unsigned long rmpath(const std::string& path);
+
+/// Removes a file
 CXXUTILS_API
 bool rmfile(const std::string& path);
+
+/// Creates the path for the a file path
 CXXUTILS_API
 bool mkfilepath(const std::string& path);
+
+/// Rename a file
 CXXUTILS_API
 void rename(const std::string& from_path, const std::string& to_path);
+
+/// Returns absolute path to the file
 CXXUTILS_API
 std::string fullpath(const std::string& rel);
+
+/// Returns absolute path to the file in the specified directory
 CXXUTILS_API
 std::string fullpath(const std::string& dir, const std::string& file);
+
+/// Strips the directory portion of a file path
 CXXUTILS_API
 std::string basename(const std::string& path, const std::string& ext = "");
+
+/// Strips the file portion of a file path
 CXXUTILS_API
 std::string dirname(const std::string& path);
+
+/// Converts a human readable size (1GB) to bytes
 CXXUTILS_API
 unsigned long long human_readable_size(const std::string& expr);
+
+/// Converts a size to a human readable size (1024 --> 1KB)
 CXXUTILS_API
 std::string human_readable_size(uint64_t size, const std::string& user_unit = "B");
 
+/// Splits expr into list according to re
 CXXUTILS_API
 void split(const std::string& re, const std::string& expr, cxxu::string_list& list);
 
+/// Trims whitespaces and end-of-line characters
 CXXUTILS_API
 void chomp(std::string& s);
 
+/// Removes quotes
 CXXUTILS_API
 void unquote(std::string& s);
 
+/// Returns filesystem entries corresponding to the specified glob
+/// expression
 CXXUTILS_API
 cxxu::string_list glob(const std::string& expr);
 
+/// @return true if \c expr matches \c re
 CXXUTILS_API
 bool match(const std::string& expr, const std::string& re);
 
