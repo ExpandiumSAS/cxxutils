@@ -1,6 +1,6 @@
 # cxxutils
 
-C++11/14 features collections to improve your C++ project Dev
+C++11/14 utilities collections to improve your C++ project Dev
 
 ## Build cxxutils
 
