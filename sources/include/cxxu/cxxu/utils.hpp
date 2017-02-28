@@ -321,6 +321,14 @@ std::string to_string_fr(T i) {
     return str;
 }
 
+template<typename UINT>
+std::string
+to_hex(UINT value, int size = sizeof(UINT)) {
+    char buffer[32];
+    size_t length = sprintf(buffer, "%0*X", size * 2, value);
+    return std::string(buffer, length);
+}
+
 template <typename T>
 struct make_vector {
     typedef std::vector<T> vector_type;

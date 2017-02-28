@@ -66,3 +66,25 @@ BOOST_AUTO_TEST_CASE(to_string_fr)
     BOOST_CHECK_EQUAL(cxxu::to_string_fr(1234567), "1.234.567");
     BOOST_CHECK_EQUAL(cxxu::to_string_fr(12345678), "12.345.678");
 }
+
+BOOST_AUTO_TEST_CASE(to_hex)
+{
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)1), "01");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)9), "09");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)10), "0A");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)16), "10");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)255), "FF");
+
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)1, 4), "00000001");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)9, 4), "00000009");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)10, 4), "0000000A");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)16, 4), "00000010");
+    BOOST_CHECK_EQUAL(cxxu::to_hex((uint8_t)255, 4), "000000FF");
+
+    BOOST_CHECK_EQUAL(cxxu::to_hex(1), "00000001");
+    BOOST_CHECK_EQUAL(cxxu::to_hex(9), "00000009");
+    BOOST_CHECK_EQUAL(cxxu::to_hex(10), "0000000A");
+    BOOST_CHECK_EQUAL(cxxu::to_hex(16), "00000010");
+    BOOST_CHECK_EQUAL(cxxu::to_hex(255), "000000FF");
+}
+
