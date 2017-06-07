@@ -27,8 +27,14 @@ clog_writer::operator()(level l, const std::string& what)
             << (harness_active ? "# " : "")
             << (interactive_ ? "" : make_timestamp())
             << make_level(l)
-            << what
-            << std::endl;
+            << what;
+
+        if (what.size() && *what.rbegin() == '\r') {
+            std::clog.flush();
+        }
+        else {
+            std::clog << std::endl;
+        }
     }
 }
 
