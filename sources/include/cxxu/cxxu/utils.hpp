@@ -329,6 +329,14 @@ to_hex(UINT value, int size = sizeof(UINT)) {
     return std::string(buffer, length);
 }
 
+inline
+std::string
+to_hex(uint64_t value, int size = sizeof(uint64_t)) {
+    char buffer[32];
+    size_t length = sprintf(buffer, "%0*lX", size * 2, value);
+    return std::string(buffer, length);
+}
+
 template <typename T>
 struct make_vector {
     typedef std::vector<T> vector_type;
