@@ -154,7 +154,7 @@ typedef enum { XXH_OK=0, XXH_ERROR } XXH_errorcode;
 #define XXH_VERSION_MINOR    6
 #define XXH_VERSION_RELEASE  5
 #define XXH_VERSION_NUMBER  (XXH_VERSION_MAJOR *100*100 + XXH_VERSION_MINOR *100 + XXH_VERSION_RELEASE)
-XXH_PUBLIC_API unsigned XXH_versionNumber (void);
+CXXUTILS_API unsigned XXH_versionNumber (void);
 
 
 /*-**********************************************************************
@@ -167,17 +167,17 @@ typedef unsigned int XXH32_hash_t;
     The memory between input & input+length must be valid (allocated and read-accessible).
     "seed" can be used to alter the result predictably.
     Speed on Core 2 Duo @ 3 GHz (single thread, SMHasher benchmark) : 5.4 GB/s */
-XXH_PUBLIC_API XXH32_hash_t XXH32 (const void* input, size_t length, unsigned int seed);
+CXXUTILS_API XXH32_hash_t XXH32 (const void* input, size_t length, unsigned int seed);
 
 /*======   Streaming   ======*/
 typedef struct XXH32_state_s XXH32_state_t;   /* incomplete type */
-XXH_PUBLIC_API XXH32_state_t* XXH32_createState(void);
-XXH_PUBLIC_API XXH_errorcode  XXH32_freeState(XXH32_state_t* statePtr);
-XXH_PUBLIC_API void XXH32_copyState(XXH32_state_t* dst_state, const XXH32_state_t* src_state);
+CXXUTILS_API XXH32_state_t* XXH32_createState(void);
+CXXUTILS_API XXH_errorcode  XXH32_freeState(XXH32_state_t* statePtr);
+CXXUTILS_API void XXH32_copyState(XXH32_state_t* dst_state, const XXH32_state_t* src_state);
 
-XXH_PUBLIC_API XXH_errorcode XXH32_reset  (XXH32_state_t* statePtr, unsigned int seed);
-XXH_PUBLIC_API XXH_errorcode XXH32_update (XXH32_state_t* statePtr, const void* input, size_t length);
-XXH_PUBLIC_API XXH32_hash_t  XXH32_digest (const XXH32_state_t* statePtr);
+CXXUTILS_API XXH_errorcode XXH32_reset  (XXH32_state_t* statePtr, unsigned int seed);
+CXXUTILS_API XXH_errorcode XXH32_update (XXH32_state_t* statePtr, const void* input, size_t length);
+CXXUTILS_API XXH32_hash_t  XXH32_digest (const XXH32_state_t* statePtr);
 
 /*
  * Streaming functions generate the xxHash of an input provided in multiple segments.
