@@ -71,6 +71,7 @@ XXH32        6.8 GB/s            6.0 GB/s
 extern "C" {
 #endif
 
+#include <cxxutils/config.h>
 
 /* ****************************
 *  Definitions
@@ -202,8 +203,8 @@ XXH_PUBLIC_API XXH32_hash_t  XXH32_digest (const XXH32_state_t* statePtr);
 /*======   Canonical representation   ======*/
 
 typedef struct { unsigned char digest[4]; } XXH32_canonical_t;
-XXH_PUBLIC_API void XXH32_canonicalFromHash(XXH32_canonical_t* dst, XXH32_hash_t hash);
-XXH_PUBLIC_API XXH32_hash_t XXH32_hashFromCanonical(const XXH32_canonical_t* src);
+CXXUTILS_API void XXH32_canonicalFromHash(XXH32_canonical_t* dst, XXH32_hash_t hash);
+CXXUTILS_API XXH32_hash_t XXH32_hashFromCanonical(const XXH32_canonical_t* src);
 
 /* Default result type for XXH functions are primitive unsigned 32 and 64 bits.
  * The canonical representation uses human-readable write convention, aka big-endian (large digits first).
@@ -223,22 +224,22 @@ typedef unsigned long long XXH64_hash_t;
     "seed" can be used to alter the result predictably.
     This function runs faster on 64-bit systems, but slower on 32-bit systems (see benchmark).
 */
-XXH_PUBLIC_API XXH64_hash_t XXH64 (const void* input, size_t length, unsigned long long seed);
+CXXUTILS_API XXH64_hash_t XXH64 (const void* input, size_t length, unsigned long long seed);
 
 /*======   Streaming   ======*/
 typedef struct XXH64_state_s XXH64_state_t;   /* incomplete type */
-XXH_PUBLIC_API XXH64_state_t* XXH64_createState(void);
-XXH_PUBLIC_API XXH_errorcode  XXH64_freeState(XXH64_state_t* statePtr);
-XXH_PUBLIC_API void XXH64_copyState(XXH64_state_t* dst_state, const XXH64_state_t* src_state);
+CXXUTILS_API XXH64_state_t* XXH64_createState(void);
+CXXUTILS_API XXH_errorcode  XXH64_freeState(XXH64_state_t* statePtr);
+CXXUTILS_API void XXH64_copyState(XXH64_state_t* dst_state, const XXH64_state_t* src_state);
 
-XXH_PUBLIC_API XXH_errorcode XXH64_reset  (XXH64_state_t* statePtr, unsigned long long seed);
-XXH_PUBLIC_API XXH_errorcode XXH64_update (XXH64_state_t* statePtr, const void* input, size_t length);
-XXH_PUBLIC_API XXH64_hash_t  XXH64_digest (const XXH64_state_t* statePtr);
+CXXUTILS_API XXH_errorcode XXH64_reset  (XXH64_state_t* statePtr, unsigned long long seed);
+CXXUTILS_API XXH_errorcode XXH64_update (XXH64_state_t* statePtr, const void* input, size_t length);
+CXXUTILS_API XXH64_hash_t  XXH64_digest (const XXH64_state_t* statePtr);
 
 /*======   Canonical representation   ======*/
 typedef struct { unsigned char digest[8]; } XXH64_canonical_t;
-XXH_PUBLIC_API void XXH64_canonicalFromHash(XXH64_canonical_t* dst, XXH64_hash_t hash);
-XXH_PUBLIC_API XXH64_hash_t XXH64_hashFromCanonical(const XXH64_canonical_t* src);
+CXXUTILS_API void XXH64_canonicalFromHash(XXH64_canonical_t* dst, XXH64_hash_t hash);
+CXXUTILS_API XXH64_hash_t XXH64_hashFromCanonical(const XXH64_canonical_t* src);
 #endif  /* XXH_NO_LONG_LONG */
 
 
